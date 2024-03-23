@@ -349,6 +349,58 @@ wiki.use(function(req, res, next) {
 		</html>
 	`);
 });
+// 408 페이지
+server.requestTimeout = 20;
+wiki.use(function(req, res, next) {
+    return res.status(408).send(`
+		<!DOCTYPE html>
+		<html>
+			<head>
+				<meta charset=utf-8 />
+				<meta name=viewport content="width=1240">
+				<title>Page is not found!</title>
+				<style>
+					section {
+						position: fixed;
+						top: 0;
+						right: 0;
+						bottom: 0;
+						left: 0;
+						padding: 80px 0 0;
+						background-color:#EFEFEF;
+						font-family: "Open Sans", sans-serif;
+						text-align: center;
+					}
+					
+					h1 {
+						margin: 0 0 19px;
+						font-size: 40px;
+						font-weight: normal;
+						color: #E02B2B;
+						line-height: 40px;
+					}
+					
+					p {
+						margin: 0 0 57px;
+						font-size: 16px;
+						color:#444;
+						line-height: 23px;
+					}
+				</style>
+			</head>
+			
+			<body>
+				<section>
+					<h1>408</h1>
+					<p>
+						<br />
+						<a href="/">Back to home</a>
+					</p>
+				</section>
+			</body>
+		</html>
+	`);
+});
 
 (async function setWikiData() {
 	// 위키 설정 캐시
