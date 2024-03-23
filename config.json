@@ -13,4 +13,5 @@
   "use_external_js": "true",
   "theseed_version": "4.29.0"
   "search_autostart": "true"
+  "namuwiki_exclusive": "true"
 }
