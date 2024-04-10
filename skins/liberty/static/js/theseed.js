@@ -89,10 +89,33 @@ $(function() {
 		return false;
 	});
 
-	const localTheme = window.matchMedia('(prefers-color-scheme: dark)')
-	localTheme.matches ? document.body.classList.add('theseed-dark-mode') : 0
-	localTheme.addEventListener('change', function(value){
-		value.matches ? document.body.classList.add('theseed-dark-mode') : document.body.classList.remove('theseed-dark-mode')
+	let storage = localStorage.theseed_settings;
+	if (storage) storage = JSON.parse(storage);
+	else storage = {};
+
+	function changeTheme(theme){
+		if (theme) {
+			document.body.classList.remove('theseed-light-mode');
+			document.body.classList.add('theseed-dark-mode');
+		}
+		else {
+			document.body.classList.add('theseed-light-mode');
+			document.body.classList.remove('theseed-dark-mode');
+		}
+
+		$("#theme").text(theme ? '라이트 테마로' : '다크 테마로');
+	};
+
+	const localTheme = window.matchMedia('(prefers-color-scheme: dark)');
+	changeTheme(storage['wiki.theme'] === 'dark' || localTheme.matches);
+
+	localTheme.addEventListener('change', (value) => (!storage['wiki.theme'] || storage['wiki.theme'] === 'auto') ? changeTheme(value.matches) : '');
+
+	$("#theme").click(function(){
+		var now = $(this).text() === '다크 테마로';
+
+		storage['wiki.theme'] = now ? 'dark' : 'light';
+		localStorage.theseed_settings = JSON.stringify(storage);
+		changeTheme(now);
 	});
 });
-
