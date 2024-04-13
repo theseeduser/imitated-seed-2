@@ -7,9 +7,8 @@ router.all(/^\/admin\/grant$/, async(req, res, next) => {
 	var content = `
 		<form method=get>
 			<div>
-				<label>유저 이름 :</label>
-				<input type=text id=usernameInput class=form-control style="width: 250px;" name=username value="${html.escape(username ? username : '')}" />
-				<button type=submit class="btn btn-info pull-right" style="width: 100px;">확인</button>
+				<label>Username:</label> <input type=text id=usernameInput class=form-control style="width: 250px;" name=username value="${html.escape(username ? username : '')}" />
+				<button type=submit class="btn-btn primary" style="font: 13.5px Arial; padding: 3px 10.5px">확인</button>
 			</div>
 		</form>
 		<br />
