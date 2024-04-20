@@ -1213,6 +1213,16 @@ async function getacl(req, title, namespace, type, getmsg, noeq) {
 							data = data[0];
 							if(new Date().getTime() >= Number(data.time) + 1296000000) ret = 1;
 						}
+					} break; case 'member_signup_1days_ago': {
+						if(!islogin(req)) break;
+						var blocked = await userblocked(ip_check(req));
+						if(blocked) break;
+						
+						var data = await curs.execute("select time from history where title = ? and namespace = '사용자' and username = ? and ismember = 'author' and advance = 'create' order by cast(rev as integer) asc limit 1", [ip_check(req), ip_check(req)]);
+						if(data.length) {
+							data = data[0];
+							if(new Date().getTime() >= Number(data.time) + 86400000) ret = 1;
+						}
 					} break; case 'blocked_ipacl': {
 						if(!ver('4.18.0')) for(let row of ipacl) {
 							if(ipRangeCheck(ip_check(req, 1), row.cidr) && !(islogin(req) && row.al == '1')) {
